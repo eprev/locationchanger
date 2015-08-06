@@ -13,13 +13,13 @@ It will ask you for a root password to install `locationchanger` to */usr/local/
 
 ## Usage
 
-You have to name network locations after Wi-Fi networks. Thus, if you need to have specific
-network preferences for, let’s say, “Corp Wi-Fi” wireless network, then you have to create
+You have to name network locations after Wi-Fi networks. Let’s say, you need to have
+a specific network preferences for “Corp Wi-Fi” wireless network, then you have to create
 a location “Corp Wi-Fi”. Now, the network location will change to “Corp Wi-Fi” automatically,
 if you connect to that wireless network. And if you connect to the Wi-Fi network that you
 don’t have a location for, then the location will change to the default one (“Automatic”).
 
-If you want to run a script every time you connect to a specific Wi-Fi network, then place
+If you want to run a script every time you connect to a specific Wi-Fi network, then put
 those scripts in *~/.locations* and name them after Wi-Fi networks. For instance, you have
 a script that changes security preferences when you connect to the “Corp Wi-Fi” network:
 
