@@ -1,6 +1,6 @@
 # Location Changer
 
-It changes automatically OS X’s [network location](https://support.apple.com/en-us/HT202480)
+It automatically changes OS X’s [network location](https://support.apple.com/en-us/HT202480)
 based on the name of Wi-Fi network and runs arbitrary scrips when it happens.
 
 ## Installation
