@@ -25,24 +25,43 @@ SSID=`/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Re
 LOCATION_NAMES=`scselect | tail -n +2 | awk '{print ($1 == "*") ? $3 : $2}' | sed 's/[()]//g'`
 CURRENT_LOCATION=`scselect | tail -n +2 | awk '{if ($1 == "*") print $3}' | sed 's/[()]//g'`
 
+ts "Connected to '$SSID'"
+
+CONFIG_FILE=$HOME/.locations/locations.conf
+
+if [ -f $CONFIG_FILE ]; then
+    NEW_SSID=`egrep "^$SSID=" $CONFIG_FILE | cut -d = -f 2`
+    if [ "$NEW_SSID" != "" ]; then
+        ts "Will switch the location to '$NEW_SSID' (configuration file)"
+        SSID=$NEW_SSID
+    else
+        ts "Will switch the location to '$SSID'"
+    fi
+fi
+
 if echo "$LOCATION_NAMES" | egrep -q "^$SSID$"; then
     NEW_LOCATION="$SSID"
 else
     if echo "$LOCATION_NAMES" | egrep -q "^Automatic$"; then
         NEW_LOCATION=Automatic
+        ts "Location '$SSID' was not found. Will default to 'Automatic'"
     else
-        ts "Location not found. The following locations are available: $LOCATION_NAMES"
+        ts "Location '$SSID' was not found. The following locations are available: $LOCATION_NAMES"
         exit 1
     fi
 fi
 
-if [ "$NEW_LOCATION" != "" -a "$NEW_LOCATION" != "$CURRENT_LOCATION" ]; then
-    ts "Changing the location to $NEW_LOCATION"
-    scselect "$NEW_LOCATION"
-    SCRIPT="$HOME/.locations/$NEW_LOCATION"
-    if [ -f $SCRIPT ]; then
-        ts "Running $SCRIPT"
-        $SCRIPT
+if [ "$NEW_LOCATION" != "" ]; then
+    if [ "$NEW_LOCATION" != "$CURRENT_LOCATION" ]; then
+        ts "Changing the location to '$NEW_LOCATION'"
+        scselect "$NEW_LOCATION"
+        SCRIPT="$HOME/.locations/$NEW_LOCATION"
+        if [ -f $SCRIPT ]; then
+            ts "Running '$SCRIPT'"
+            $SCRIPT
+        fi
+    else
+        ts "Already at '$NEW_LOCATION'"
     fi
 fi
 EOT
