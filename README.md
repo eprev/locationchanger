@@ -3,7 +3,7 @@
 It automatically changes OS X’s [network location](https://support.apple.com/en-us/HT202480)
 based on the name of Wi-Fi network and runs arbitrary scrips when it happens.
 
-## Installation
+## Installation & Update
 
 ```
 curl -L https://github.com/eprev/locationchanger/raw/master/locationchanger.sh | bash
@@ -39,3 +39,13 @@ Then name this script as *~/.locations/Corp Wi-Fi*. And you might want to create
 # Don’t require password immediately after sleep or screen saver begins
 osascript -e 'tell application "System Events" to set require password to wake of security preferences to false'
 ```
+
+## Advanced usage
+
+If you want to share one network location between the different wireless networks (for instance, you have a wireless router which broadcasts on 2.4 and 5GHz bands simultaneously), then you can create a configuration file *~/.locations/locations.conf* (plain text file with simple key-value pairs):
+
+```bash
+Wi-Fi_5GHz=Wi-Fi
+```
+
+Where the keys are the wireless network names and values are the desired location names.
