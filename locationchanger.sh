@@ -20,7 +20,8 @@ ts() {
     date +"[%Y-%m-%d %H:%M] $*"
 }
 
-SSID=`/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | grep ' SSID' | awk '{print $2}'`
+SSID_FULL=`/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | grep ' SSID' | awk '{print $2}'`
+SSID=${SSID_FULL%_5GHz}
 
 LOCATION_NAMES=`scselect | tail -n +2 | awk '{print ($1 == "*") ? $3 : $2}' | sed 's/[()]//g'`
 CURRENT_LOCATION=`scselect | tail -n +2 | awk '{if ($1 == "*") print $3}' | sed 's/[()]//g'`
