@@ -9,7 +9,7 @@ based on the name of Wi-Fi network and runs arbitrary scrips when it happens.
 curl -L https://github.com/eprev/locationchanger/raw/master/locationchanger.sh | bash
 ```
 
-It will ask you for a root password to install `locationchanger` to */usr/local/bin* directory.
+It will ask you for a root password to install `locationchanger` to the */usr/local/bin* directory.
 
 ## Usage
 
@@ -48,4 +48,4 @@ If you want to share one network location between the different wireless network
 Wi-Fi_5GHz=Wi-Fi
 ```
 
-Where the keys are the wireless network names and values are the desired location names.
+Where the keys are the wireless network names and the values are the desired location names.
