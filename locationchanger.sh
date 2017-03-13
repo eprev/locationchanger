@@ -20,10 +20,10 @@ ts() {
     date +"[%Y-%m-%d %H:%M] $*"
 }
 
-SSID=`/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | grep ' SSID' | awk '{print $2}'`
+SSID=`/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | grep ' SSID' | cut -d : -f 2- | sed 's/^[ \t]*//'`
 
-LOCATION_NAMES=`scselect | tail -n +2 | awk '{print ($1 == "*") ? $3 : $2}' | sed 's/[()]//g'`
-CURRENT_LOCATION=`scselect | tail -n +2 | awk '{if ($1 == "*") print $3}' | sed 's/[()]//g'`
+LOCATION_NAMES=`scselect | tail -n +2 | cut -d \( -f 2- | sed 's/)$//'`
+CURRENT_LOCATION=`scselect | tail -n +2 | egrep '^\ +\*' | cut -d \( -f 2- | sed 's/)$//'`
 
 ts "Connected to '$SSID'"
 
