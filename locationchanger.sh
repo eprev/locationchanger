@@ -2,7 +2,8 @@
 
 INSTALL_DIR=/usr/local/bin
 SCRIPT_NAME=$INSTALL_DIR/locationchanger
-PLIST_NAME=$HOME/Library/LaunchAgents/LocationChanger.plist
+LAUNCH_AGENTS_DIR=$HOME/Library/LaunchAgents
+PLIST_NAME=$LAUNCH_AGENTS_DIR/LocationChanger.plist
 
 sudo -v
 
@@ -68,6 +69,7 @@ EOT
 
 chmod +x $SCRIPT_NAME
 
+mkdir -p $LAUNCH_AGENTS_DIR
 cat > $PLIST_NAME << EOT
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
