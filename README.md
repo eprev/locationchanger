@@ -56,9 +56,11 @@ The tool writes quite extensive information to the log file, each time it detect
 
 ```bash
 tail -f ~/Library/Logs/LocationChanger.log
-[2017-09-18 20:30] Connected to 'Wi-Fi'
-[2017-09-18 20:30] Will switch the location to 'Home' (configuration file)
-[2017-09-18 20:30] Changing the location to 'Home'
-CurrentSet updated to XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX (Home)
-[2017-09-18 20:30] Running '~/.locations/Home'
+```
+
+```
+Connected to 'Wi-Fi'
+Will switch the location to 'Home' (configuration file)
+Changing the location to 'Home'
+Running '~/.locations/Home'
 ```
