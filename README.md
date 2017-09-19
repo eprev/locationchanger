@@ -49,3 +49,16 @@ Wi-Fi_5GHz=Wi-Fi
 ```
 
 Where the keys are the wireless network names and the values are the desired location names.
+
+## Troubleshooting
+
+The tool writes quite extensive information to the log file, each time it detects wireless network changes:
+
+```bash
+tail -f ~/Library/Logs/LocationChanger.log
+[2017-09-18 20:30] Connected to 'Wi-Fi'
+[2017-09-18 20:30] Will switch the location to 'Home' (configuration file)
+[2017-09-18 20:30] Changing the location to 'Home'
+CurrentSet updated to XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX (Home)
+[2017-09-18 20:30] Running '~/.locations/Home'
+```
