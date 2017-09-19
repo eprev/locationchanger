@@ -52,11 +52,13 @@ Where the keys are the wireless network names and the values are the desired loc
 
 ## Troubleshooting
 
-The tool writes quite extensive information to the log file, each time it detects wireless network changes:
+It writes quite extensive information to the log file every time the wireless network changes:
 
 ```bash
 tail -f ~/Library/Logs/LocationChanger.log
 ```
+
+Sample output:
 
 ```
 Connected to 'Wi-Fi'
