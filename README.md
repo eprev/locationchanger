@@ -42,7 +42,7 @@ osascript -e 'tell application "System Events" to set require password to wake o
 
 ## Configuration
 
-If you want to share one network location between the different wireless networks (for instance, you have a wireless router which broadcasts on 2.4 and 5GHz bands simultaneously), then you can create a configuration file *~/.locations/locations.conf* (plain text file with simple key-value pairs):
+If you want to share one network location between different wireless networks (for instance, you have a wireless router which broadcasts on 2.4 and 5GHz bands simultaneously), then you can create a configuration file *~/.locations/locations.conf* (plain text file with simple key-value pairs, no spaces in between):
 
 ```bash
 Wi-Fi_5GHz=Wi-Fi
