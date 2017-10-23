@@ -61,8 +61,8 @@ tail -f ~/Library/Logs/LocationChanger.log
 Sample output:
 
 ```
-Connected to 'Wi-Fi'
-Will switch the location to 'Home' (configuration file)
-Changing the location to 'Home'
-Running '~/.locations/Home'
+Connected to 'Wi-Fi_5GHz'
+Will switch the location to 'Wi-Fi' (configuration file)
+Changing the location to 'Wi-Fi'
+Running '~/.locations/Wi-Fi'
 ```
