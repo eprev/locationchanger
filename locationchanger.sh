@@ -57,9 +57,9 @@ if [ "$NEW_LOCATION" != "" ]; then
         ts "Changing the location to '$NEW_LOCATION'"
         scselect "$NEW_LOCATION"
         SCRIPT="$HOME/.locations/$NEW_LOCATION"
-        if [ -f $SCRIPT ]; then
+        if [ -f "$SCRIPT" ]; then
             ts "Running '$SCRIPT'"
-            $SCRIPT
+            "$SCRIPT"
         fi
     else
         ts "Already at '$NEW_LOCATION'"
