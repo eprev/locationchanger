@@ -11,7 +11,7 @@ curl -L https://github.com/eprev/locationchanger/raw/master/locationchanger.sh |
 
 It will ask you for a root password to install `locationchanger` to the */usr/local/bin* directory.
 
-## Usage
+## Basic usage
 
 You have to name network locations after Wi-Fi networks. Let’s say, you need to have
 a specific network preferences for “Corp Wi-Fi” wireless network, then you have to create
@@ -40,7 +40,7 @@ Then name this script as *~/.locations/Corp Wi-Fi*. And you might want to create
 osascript -e 'tell application "System Events" to set require password to wake of security preferences to false'
 ```
 
-## Configuration
+## Aliasing
 
 If you want to share one network location between different wireless networks (for instance, you have a wireless router which broadcasts on 2.4 and 5GHz bands simultaneously), then you can create a configuration file *~/.locations/locations.conf* (plain text file with simple key-value pairs, no spaces in between):
 
