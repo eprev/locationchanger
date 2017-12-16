@@ -7,8 +7,8 @@ PLIST_NAME=$LAUNCH_AGENTS_DIR/LocationChanger.plist
 
 sudo -v
 
-mkdir -p $INSTALL_DIR
-cat > $SCRIPT_NAME << "EOT"
+sudo mkdir -p $INSTALL_DIR
+cat << "EOT" | sudo tee $SCRIPT_NAME > /dev/null
 #!/bin/bash
 
 # This script changes network location based on the name of Wi-Fi network.
@@ -67,7 +67,7 @@ if [ "$NEW_LOCATION" != "" ]; then
 fi
 EOT
 
-chmod +x $SCRIPT_NAME
+sudo chmod +x $SCRIPT_NAME
 
 mkdir -p $LAUNCH_AGENTS_DIR
 cat > $PLIST_NAME << EOT
