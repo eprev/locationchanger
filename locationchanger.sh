@@ -40,7 +40,7 @@ if [ -f $CONFIG_FILE ]; then
     fi
 fi
 
-if echo "$LOCATION_NAMES" | egrep -q "^$SSID$"; then
+if echo "$LOCATION_NAMES" | grep -q "^$SSID$"; then
     NEW_LOCATION="$SSID"
 else
     if echo "$LOCATION_NAMES" | egrep -q "^Automatic$"; then
