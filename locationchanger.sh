@@ -30,8 +30,10 @@ ts "Connected to '$SSID'"
 
 CONFIG_FILE=$HOME/.locations/locations.conf
 
+ESSID=`echo "$SSID" | sed 's/[.[\*^$]/\\\\&/g'`
+
 if [ -f $CONFIG_FILE ]; then
-    NEW_SSID=`egrep "^$SSID=" $CONFIG_FILE | cut -d = -f 2`
+    NEW_SSID=`grep "^$ESSID=" $CONFIG_FILE | cut -d = -f 2`
     if [ "$NEW_SSID" != "" ]; then
         ts "Will switch the location to '$NEW_SSID' (configuration file)"
         SSID=$NEW_SSID
@@ -40,10 +42,10 @@ if [ -f $CONFIG_FILE ]; then
     fi
 fi
 
-if echo "$LOCATION_NAMES" | egrep -q "^$SSID$"; then
+if echo "$LOCATION_NAMES" | grep -q "^$ESSID$"; then
     NEW_LOCATION="$SSID"
 else
-    if echo "$LOCATION_NAMES" | egrep -q "^Automatic$"; then
+    if echo "$LOCATION_NAMES" | grep -q "^Automatic$"; then
         NEW_LOCATION=Automatic
         ts "Location '$SSID' was not found. Will default to 'Automatic'"
     else
