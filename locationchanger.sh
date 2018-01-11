@@ -37,6 +37,7 @@ if [ -f $CONFIG_FILE ]; then
     if [ "$NEW_SSID" != "" ]; then
         ts "Will switch the location to '$NEW_SSID' (configuration file)"
         SSID=$NEW_SSID
+        ESSID=`echo "$SSID" | sed 's/[.[\*^$]/\\\\&/g'`
     else
         ts "Will switch the location to '$SSID'"
     fi
