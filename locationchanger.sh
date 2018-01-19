@@ -21,7 +21,7 @@ ts() {
     date +"[%Y-%m-%d %H:%M] $*"
 }
 
-SSID=`/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | grep ' SSID' | cut -d : -f 2- | sed 's/^[ \t]*//'`
+SSID=`/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | grep ' SSID' | cut -d : -f 2- | sed 's/^[ ]*//'`
 
 LOCATION_NAMES=`scselect | tail -n +2 | cut -d \( -f 2- | sed 's/)$//'`
 CURRENT_LOCATION=`scselect | tail -n +2 | egrep '^\ +\*' | cut -d \( -f 2- | sed 's/)$//'`
@@ -30,19 +30,18 @@ ts "Connected to '$SSID'"
 
 CONFIG_FILE=$HOME/.locations/locations.conf
 
-ESSID=`echo "$SSID" | sed 's/[.[\*^$]/\\\\&/g'`
-
 if [ -f $CONFIG_FILE ]; then
+    ESSID=`echo "$SSID" | sed 's/[.[\*^$]/\\\\&/g'`
     NEW_SSID=`grep "^$ESSID=" $CONFIG_FILE | cut -d = -f 2`
     if [ "$NEW_SSID" != "" ]; then
         ts "Will switch the location to '$NEW_SSID' (configuration file)"
         SSID=$NEW_SSID
-        ESSID=`echo "$SSID" | sed 's/[.[\*^$]/\\\\&/g'`
     else
         ts "Will switch the location to '$SSID'"
     fi
 fi
 
+ESSID=`echo "$SSID" | sed 's/[.[\*^$]/\\\\&/g'`
 if echo "$LOCATION_NAMES" | grep -q "^$ESSID$"; then
     NEW_LOCATION="$SSID"
 else
