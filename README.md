@@ -25,6 +25,7 @@ a script that changes security preferences when you connect to the “Corp Wi-Fi
 
 ```bash
 #!/usr/bin/env bash
+exec 2>&1
 
 # Require password immediately after sleep or screen saver begins
 osascript -e 'tell application "System Events" to set require password to wake of security preferences to true'
@@ -35,6 +36,7 @@ Then name this script as *~/.locations/Corp Wi-Fi*. And you might want to create
 
 ```bash
 #!/usr/bin/env bash
+exec 2>&1
 
 # Don’t require password immediately after sleep or screen saver begins
 osascript -e 'tell application "System Events" to set require password to wake of security preferences to false'
