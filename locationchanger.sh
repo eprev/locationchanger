@@ -12,13 +12,14 @@ cat << "EOT" | sudo tee ${SCRIPT_NAME} > /dev/null
 #!/bin/bash
 
 # This script changes network location based on the name of Wi-Fi network.
+DEFAULT_LOCATION='Automatic'
 
 exec 2>&1 >> ${HOME}/Library/Logs/LocationChanger.log
 
 sleep 3
 
 ts() {
-    date +"[%Y-%m-%d %H:%M] ${*}"
+    date +"[%Y-%m-%d %H:%M:%S] ${*}"
 }
 
 SSID=`/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | grep ' SSID' | cut -d : -f 2- | sed 's/^[ ]*//'`
@@ -45,9 +46,9 @@ ESSID=`echo "${SSID}" | sed 's/[.[\*^$]/\\\\&/g'`
 if echo "${LOCATION_NAMES}" | grep -q "^${ESSID}$"; then
     NEW_LOCATION="${SSID}"
 else
-    if echo "${LOCATION_NAMES}" | grep -q "^Automatic$"; then
-        NEW_LOCATION=Automatic
-        ts "Location '${SSID}' was not found. Will default to 'Automatic'"
+    if echo "${LOCATION_NAMES}" | grep -q "^${DEFAULT_LOCATION}$"; then
+        NEW_LOCATION=${DEFAULT_LOCATION}
+        ts "Location '${SSID}' was not found. Will default to '${DEFAULT_LOCATION}'"
     else
         ts "Location '${SSID}' was not found. The following locations are available: ${LOCATION_NAMES}"
         exit 1
