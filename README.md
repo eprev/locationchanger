@@ -20,7 +20,7 @@ to install it elsewhere, please download the source and edit the `INSTALL_DIR` v
 ## Basic Usage
 
 Basic usage of *Location Changer* involves having Location names that match your Wi-Fi Network SSIDs
-(e.g. a macOS Location with the name `Home Wi-Fi` will correspond to the Wi-Fi Network SSID `Home-WiFi`).
+(e.g. a macOS Location with the name `Home Wi-Fi` will correspond to the Wi-Fi Network SSID `Home WiFi`).
 When joining a Wi-Fi network, *Location Changer* will look for a Location whose name matches that of the
 SSID and will switch accordingly.
 
@@ -98,11 +98,11 @@ osascript -e 'tell application "System Events" to set require password to wake o
 
 * `0` - disable notifications
 * `1` - enable notifications whenever the Location is changed
-* `2` - enable notidications whenever a Wi-Fi network is joined, regardless of if the Location was changed
+* `2` - enable notifications whenever a Wi-Fi network is joined, regardless of if the Location was changed
 
 ## Troubleshooting
 
-Logging information is written to `${HOME}/Library/Logs/LocationChanger.log` by default. This can be adjusted by editing the `LOGFILE` variable in the script prior to installation. Inspecting this log can be helpful when troubleshooting issues.
+Logging information is written to `${HOME}/Library/Logs/LocationChanger.log` by default. This can be adjusted by editing the `LOGFILE` variable (on Line 21) in the script prior to installation. Inspecting this log can be helpful when troubleshooting issues.
 
 ```bash
 tail -f ~/Library/Logs/LocationChanger.log
