@@ -15,6 +15,7 @@ cat << "EOT" | sudo tee ${SCRIPT_NAME} > /dev/null
 DEFAULT_LOCATION='Automatic'
 ENABLE_NOTIFICATIONS=1 # To enable notifications, set to 1. For verbose notifications, set to 2. To disable, set to 0.
 CONFIG_FILE=${HOME}/.locations/locations.conf
+SCRIPT_DIR=${HOME}/.locations # directory for scripts attached to Locations
 LOGFILE=${HOME}/Library/Logs/LocationChanger.log
 
 exec 2>&1 >> ${LOGFILE}
@@ -74,10 +75,10 @@ if [ "${NEW_LOCATION}" != "" ]; then
         if [ ${?} -ne 0 ]; then
             NOTIFICATION_STRING="Something went wrong trying to automatically switch Location. Please consult the log at: ${LOGFILE}"
         fi
-        SCRIPT="${HOME}/.locations/${NEW_LOCATION}"
+        SCRIPT="${SCRIPT_DIR}/${NEW_LOCATION}"
         if [ -f "${SCRIPT}" ]; then
-            ts "Running '${SCRIPT}'"
-            "$[SCRIPT]"
+            ts "Running script: '${SCRIPT}'"
+            $(${SCRIPT})
         fi
     else
         ts "System is already set to the requested Location '${NEW_LOCATION}'. No change required."
