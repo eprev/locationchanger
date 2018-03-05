@@ -16,7 +16,7 @@ curl -L https://github.com/kyletmiller/locationchanger/raw/master/locationchange
 You must be an Administrator to install *Location Changer* and it will ask you for your password.
 The `locationchanger` executable is installed in `/usr/local/bin` by default. If you would like
 to install it elsewhere, please download the source and edit the `INSTALL_DIR` variable (on Line 3)
-& LaunchAgent plist string (on Line 115) prior to installation.
+prior to installation.
 
 
 ## Basic Usage

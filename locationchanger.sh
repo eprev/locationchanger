@@ -1,6 +1,6 @@
 #!/bin/bash
 
-INSTALL_DIR=/usr/local/bin # if you change this, you must also edit Line 115 below
+INSTALL_DIR=/usr/local/bin
 SCRIPT_NAME=$INSTALL_DIR/locationchanger
 LAUNCH_AGENTS_DIR=$HOME/Library/LaunchAgents
 PLIST_NAME=$LAUNCH_AGENTS_DIR/LocationChanger.plist
@@ -112,7 +112,7 @@ cat > ${PLIST_NAME} << EOT
     <string>locationchanger</string>
     <key>ProgramArguments</key>
     <array>
-        <string>/usr/local/bin/locationchanger</string>
+        <string>${SCRIPT_NAME}</string>
     </array>
     <key>WatchPaths</key>
     <array>
