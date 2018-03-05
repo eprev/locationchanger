@@ -84,7 +84,7 @@ exec 2>&1
 osascript -e 'tell application "System Events" to set require password to wake of security preferences to true'
 ```
 
-You may also want to create a script that reverses those changes when you're at home, so you don't have to enter your password to unlock your computer. You can save this as `${HOME}/.locations/Home` if your home's SSID is `Home` or you have manually configured the `Home` Location to be used for your home's Wi-Fi SSID. Alternatively, it could be saved to your default Location (`Automatic`, by default) if using the default location at home: `${HOME]/.locations/Automatic`
+You may also want to create a script that reverses those changes when you're at home, so you don't have to enter your password to unlock your computer. You can save this as `${HOME}/.locations/Home` if your home's SSID is `Home` or you have manually configured the `Home` Location to be used for your home's Wi-Fi SSID. Alternatively, it could be saved to your default Location (`Automatic`, by default) if using the default location at home: `${HOME}/.locations/Automatic`
 
 ```bash
 #!/usr/bin/env bash
