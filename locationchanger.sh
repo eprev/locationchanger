@@ -87,6 +87,8 @@ cat > $PLIST_NAME << EOT
     <array>
         <string>/Library/Preferences/SystemConfiguration/com.apple.airport.preferences.plist</string>
     </array>
+    <key>RunAtLoad</key>
+    <true/>
 </dict>
 </plist>
 EOT
