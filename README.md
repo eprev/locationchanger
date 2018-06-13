@@ -10,7 +10,7 @@ additional actions when changing the Location.
 ## Installation & Updates
 
 ```
-curl -L https://github.com/kyletmiller/locationchanger/raw/master/locationchanger.sh | bash
+curl -L https://github.com/sashagavrilov/locationchanger/raw/master/locationchanger.sh | bash
 ```
 
 You must be an Administrator to install *Location Changer* and it will ask you for your password.
@@ -49,16 +49,25 @@ One example might be if your home Wi-Fi network is broadcasted on both 2.4GHz an
 and `Home Wi-Fi 5G`, respectively. Instead of maintaining Locations for each SSID, a user can manually
 configure the same Location to be used with both.
 
+*Location Changer* can also be disabled for certain locations. This is usefull, e.g., if you want 
+to set Location manually and don't want it to be automatically changed back.
+
 Configuration happens in `${HOME}/.locations/locations.conf` by default. The location of this file can be changed
-by editing the `CONFIG_FILE` variable (on Line 17) in the `locationchanger.sh` script prior to installation. It should be a plain text
-file with key-value pairs in the following format. Spaces are supported for both the SSID as well as the Location name.
-However, no spaces should be present on either side of the `=` (unless, of course, on the edge case your SSID ends with
-a space or your Location name starts with one). Additionally, do not enclose the SSID or Location in quotes.
+by editing the `CONFIG_FILE` variable (on Line 17) in the `locationchanger.sh` script prior to installation. It should be a ini-format
+file with two sections:  `Automatic` and `Manual`. 
+`Automatic` section defines mapping for Wi-Fi Network SSIDs as key-value pairs in the following format. 
+Spaces are supported for both the SSID as well as the Location name, but all spaces around the `=` will be trimmed.
+Additionally, do not enclose the SSID or Location in quotes.
+`Manual` section contains list of Location names for wich autodetection should be ignored.
 
 ```bash
+[Automatic]
 SSID=Location
 Home Wi-Fi=Home
 SSID With Spaces=Location Name With Spaces
+
+[Manual]
+Wi-Fi Only
 ```
 
 

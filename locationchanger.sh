@@ -26,38 +26,61 @@ ts() {
     date +"[%Y-%m-%d %H:%M:%S] ${*}"
 }
 
+parse_config() {
+    local myresult=$(sed -e 's/[[:space:]]*=[[:space:]]*/=/g'           \
+                                                 -e 's/[;#].*$//'       \
+                                                 -e 's/[[:space:]]*$//' \
+                                                 -e 's/^[[:space:]]*//' \
+                                         <  ${CONFIG_FILE}              \
+                                         | sed  -n -e "/^\[$1\]/,/^s*\[/{/^[^;[]/p;}")
+    echo "${myresult}"
+}
+
 # get the SSID of the current Wi-Fi network
 SSID=$(/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | grep ' SSID' | cut -d : -f 2- | sed 's/^[ ]*//')
-
-# escape the SSID string for better string handling in our logic below
-ESSID=$(echo "${SSID}" | sed 's/[.[\*^$]/\\\\&/g')
-
-# get a list of Locations configured on this machine
-LOCATION_NAMES=$(scselect | tail -n +2 | cut -d \( -f 2- | sed 's/)$//')
 
 # get the currently selected Location
 CURRENT_LOCATION=$(scselect | tail -n +2 | egrep '^\ +\*' | cut -d \( -f 2- | sed 's/)$//')
 
+if [ -z "${SSID}" ]; then
+    ts "No active Wi-Fi network in the current location '${CURRENT_LOCATION}' found; not changing"
+    exit 1
+fi
 
 ts "Connected to '${SSID}'"
 
+# escape the SSID string for better string handling in our logic below
+ESSID=$(echo "${SSID}" | sed 's/[.[\*^$]/\\\\&/g')
+
 # if a config file exists, consult it first
 if [ -f ${CONFIG_FILE} ]; then
-    CONFIG_LOCATION=$(grep "^${ESSID}=" ${CONFIG_FILE} | cut -d = -f 2)
-    if [ "${CONFIG_LOCATION}" != "" ]; then
-        NEW_LOCATION=${CONFIG_LOCATION}
-        NOTIFICATION_STRING="SSID '${SSID}' has a manually configured Location; changing from '${CURRENT_LOCATION}' to '${NEW_LOCATION}'"
-        ts "Will switch the Location to '${NEW_LOCATION}' (found in configuration file)"
+    # check if the current location is marked as manual (no autodetection required)
+    if echo "$(parse_config Manual)" | grep -q "^${CURRENT_LOCATION}$" ; then
+        NEW_LOCATION=${CURRENT_LOCATION}
+        NOTIFICATION_STRING="Current Location is defined as manual and will not be changed automatically"
+        ts "Current Location '${CURRENT_LOCATION}' is configured as manual and will not be changed"
+    else
+        CONFIG_LOCATION=$(echo "$(parse_config Automatic)" | grep "^${ESSID}=" | cut -d = -f 2)
+        if [ "${CONFIG_LOCATION}" != "" ]; then
+            NEW_LOCATION=${CONFIG_LOCATION}
+            NOTIFICATION_STRING="SSID '${SSID}' has a configured Location; changing from '${CURRENT_LOCATION}' to '${NEW_LOCATION}'"
+            ts "Will switch the Location to '${NEW_LOCATION}' (found in configuration file)"
+        fi
     fi
 fi
 
+
+# get a list of Locations configured on this machine
+LOCATION_NAMES=$(scselect | tail -n +2 | cut -d \( -f 2- | sed 's/)$//')
+
+
 # if not found in the config file, check if there's a Location that matches the SSID
-if echo "${LOCATION_NAMES}" | grep -q "^${ESSID}$" && [ -z "${NEW_LOCATION}" ]; then
+if [ -z "${NEW_LOCATION}"] && echo "${LOCATION_NAMES}" | grep -q "^${ESSID}$"; then
     NEW_LOCATION="${SSID}"
     NOTIFICATION_STRING="Changing from '${CURRENT_LOCATION}' to '${NEW_LOCATION}', as the Location name matches the SSID"
     ts "Location '${SSID}' was found and matches the SSID. Will switch the Location to '${NEW_LOCATION}'"
 # if still not found, try to use the DEFAULT_LOCATION
-elif echo "${LOCATION_NAMES}" | grep -q "^${DEFAULT_LOCATION}$" && [ -z "${NEW_LOCATION}" ]; then
+elif [ -z "${NEW_LOCATION}"] && echo "${LOCATION_NAMES}" | grep -q "^${DEFAULT_LOCATION}$"; then
     NEW_LOCATION=${DEFAULT_LOCATION}
     NOTIFICATION_STRING="Changing from '${CURRENT_LOCATION}' to default Location '${DEFAULT_LOCATION}'"
     ts "Location '${SSID}' was not found. Will default to '${DEFAULT_LOCATION}'"
