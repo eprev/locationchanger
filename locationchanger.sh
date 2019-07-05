@@ -129,7 +129,7 @@ fi
 
 # if notifications are enabled, let 'em know what's happenin'!
 if [ ${ENABLE_NOTIFICATIONS} -ge 1 ]; then
-    osascript -e "display notification \"${NOTIFICATION_STRING}\" with title \"locationchanger\""
+    osascript -e "display notification \"${NOTIFICATION_STRING}\" with title \"LocationChanger\""
 fi
 
 exit 0
