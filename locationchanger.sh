@@ -176,7 +176,7 @@ cat > ${PLIST_NAME} << EOT
     </array>
     <key>WatchPaths</key>
     <array>
-        <string>/Library/Preferences/SystemConfiguration/com.apple.airport.preferences.plist</string>
+        <string>/Library/Preferences/SystemConfiguration/com.apple.wifi.message-tracer.plist</string>
     </array>
 </dict>
 </plist>
