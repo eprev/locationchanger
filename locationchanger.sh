@@ -106,7 +106,7 @@ fi
 if [ "${NEW_LOCATION}" != "" ]; then
     if [ "${NEW_LOCATION}" != "${CURRENT_LOCATION}" ]; then
         ts "Changing the Location to '${NEW_LOCATION}'"
-        scselect "${NEW_LOCATION}"
+        ts $(scselect "${NEW_LOCATION}")
         if [ ${?} -ne 0 ]; then
             NOTIFICATION_STRING="Something went wrong trying to automatically switch Location. Please consult the log at: ${LOGFILE}"
         fi
