@@ -14,8 +14,8 @@ cat << "EOT" | sudo tee ${SCRIPT_NAME} > /dev/null
 # This script changes network Location based on the name of Wi-Fi network.
 DEFAULT_LOCATION='Automatic'
 ENABLE_NOTIFICATIONS=1 # To enable notifications, set to 1. For verbose notifications, set to 2. To disable, set to 0.
-CONFIG_FILE=${HOME}/.locations/locations.conf
-SCRIPT_DIR=${HOME}/.locations # directory for scripts attached to Locations
+CONFIG_FILE="$HOME/Library/Application Support/LocationChanger/LocationChanger.conf"
+SCRIPT_DIR="$HOME/Library/Application Support/LocationChanger" # directory for scripts attached to Locations
 LOGFILE=${HOME}/Library/Logs/LocationChanger.log
 
 exec 2>&1 >> ${LOGFILE}
@@ -31,7 +31,7 @@ parse_config() {
                                                  -e 's/[;#].*$//'       \
                                                  -e 's/[[:space:]]*$//' \
                                                  -e 's/^[[:space:]]*//' \
-                                         <  ${CONFIG_FILE}              \
+                                         <  "${CONFIG_FILE}"              \
                                          | sed  -n -e "/^\[$1\]/,/^s*\[/{/^[^;[]/p;}")
     echo "${myresult}"
 }
@@ -53,7 +53,7 @@ ts "Connected to '${SSID}'"
 ESSID=$(echo "${SSID}" | sed 's/[.[\*^$]/\\\\&/g')
 
 # if a config file exists, consult it first
-if [ -f ${CONFIG_FILE} ]; then
+if [ -f "${CONFIG_FILE}" ]; then
     # check if the current location is marked as manual (no autodetection required)
     if echo "$(parse_config Manual)" | grep -q "^${CURRENT_LOCATION}$" ; then
         NEW_LOCATION=${CURRENT_LOCATION}
