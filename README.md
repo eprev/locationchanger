@@ -10,7 +10,7 @@ additional actions when changing the Location.
 ## Installation & Updates
 
 ```
-curl -L https://github.com/sashagavrilov/locationchanger/raw/master/locationchanger.sh | bash
+curl -L https://github.com/lisanet/locationchanger/raw/master/locationchanger.sh | bash
 ```
 
 You must be an Administrator to install *Location Changer* and it will ask you for your password.
