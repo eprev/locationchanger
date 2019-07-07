@@ -18,6 +18,15 @@ CONFIG_FILE="$HOME/Library/Application Support/LocationChanger/LocationChanger.c
 SCRIPT_DIR="$HOME/Library/Application Support/LocationChanger" # directory for scripts attached to Locations
 LOGFILE=${HOME}/Library/Logs/LocationChanger.log
 
+# truncate logfile
+lines=$(cat "$LOGFILE" | wc -l)
+if [ $lines -gt 300 ]; then
+    temp=$(mktemp)
+    tail -n +200 "$LOGFILE" > "$temp"
+    rm "$LOGFILE"
+    mv "$temp" "$LOGFILE"
+fi
+
 exec 2>&1 >> ${LOGFILE}
 
 sleep 3
