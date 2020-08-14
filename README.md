@@ -20,8 +20,9 @@ if you connect to that wireless network. And if you connect to the Wi-Fi network
 don’t have a location for, then the location will change to the default one (“Automatic”).
 
 If you want to run a script every time you connect to a specific Wi-Fi network, then put
-those scripts in *~/.locations* and name them after Wi-Fi networks. For instance, you have
-a script that changes security preferences when you connect to the “Corp Wi-Fi” network:
+those scripts in *~/.locations* and name them after Wi-Fi networks (making sure you set
+corresponding network locations). For instance, you have a script that changes security
+preferences when you connect to the “Corp Wi-Fi” network:
 
 ```bash
 #!/usr/bin/env bash
