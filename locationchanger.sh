@@ -21,6 +21,9 @@ ts() {
     date +"[%Y-%m-%d %H:%M] $*"
 }
 
+ID=`whoami`
+ts "I am '$ID'"
+
 SSID=`/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | grep ' SSID' | cut -d : -f 2- | sed 's/^[ ]*//'`
 
 LOCATION_NAMES=`scselect | tail -n +2 | cut -d \( -f 2- | sed 's/)$//'`
@@ -29,8 +32,10 @@ CURRENT_LOCATION=`scselect | tail -n +2 | egrep '^\ +\*' | cut -d \( -f 2- | sed
 ts "Connected to '$SSID'"
 
 CONFIG_FILE=$HOME/.locations/locations.conf
+ts "Probing '$CONFIG_FILE'"
 
 if [ -f $CONFIG_FILE ]; then
+    ts "Reading to '$CONFIG_FILE'"
     ESSID=`echo "$SSID" | sed 's/[.[\*^$]/\\\\&/g'`
     NEW_SSID=`grep "^$ESSID=" $CONFIG_FILE | cut -d = -f 2`
     if [ "$NEW_SSID" != "" ]; then
@@ -78,7 +83,7 @@ cat > $PLIST_NAME << EOT
 <plist version="1.0">
 <dict>
     <key>Label</key>
-    <string>locationchanger</string>
+    <string>org.eprev.locationchanger</string>
     <key>ProgramArguments</key>
     <array>
         <string>/usr/local/bin/locationchanger</string>
