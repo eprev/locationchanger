@@ -90,7 +90,7 @@ cat > $PLIST_NAME << EOT
     </array>
     <key>WatchPaths</key>
     <array>
-        <string>/Library/Preferences/SystemConfiguration/com.apple.airport.preferences.plist</string>
+        <string>/Library/Preferences/SystemConfiguration</string>
     </array>
     <key>RunAtLoad</key>
     <true/>
