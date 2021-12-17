@@ -98,4 +98,4 @@ cat > $PLIST_NAME << EOT
 </plist>
 EOT
 
-launchctl load $PLIST_NAME
+launchctl load -w $PLIST_NAME
