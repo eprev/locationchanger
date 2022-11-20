@@ -24,7 +24,7 @@ ts() {
 ID=`whoami`
 ts "I am '$ID'"
 
-SSID=`networksetup -getairportnetwork en0 | awk '{print $NF}'`
+SSID=`networksetup -listallhardwareports | awk '/Wi-Fi/{getline; print $2}' | xargs networksetup -getairportnetwork | awk '{print $NF}'`
 
 LOCATION_NAMES=`networksetup -listlocations`
 CURRENT_LOCATION=`networksetup -getcurrentlocation`
