@@ -24,6 +24,11 @@ ts() {
 ID=`whoami`
 ts "I am '$ID'"
 
+if [ "$ID" == "root" ]; then
+    ts "Running as root will read a bad config, exiting."
+    exit 1;
+fi
+
 SSID=`networksetup -listallhardwareports | awk '/Wi-Fi/{getline; print $2}' | xargs networksetup -getairportnetwork | awk '{print $NF}'`
 
 LOCATION_NAMES=`networksetup -listlocations`
