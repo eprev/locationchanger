@@ -24,10 +24,15 @@ ts() {
 ID=`whoami`
 ts "I am '$ID'"
 
-SSID=`/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | grep ' SSID' | cut -d : -f 2- | sed 's/^[ ]*//'`
+if [ "$ID" == "root" ]; then
+    ts "Running as root will read a bad config, exiting."
+    exit 1;
+fi
 
-LOCATION_NAMES=`scselect | tail -n +2 | cut -d \( -f 2- | sed 's/)$//'`
-CURRENT_LOCATION=`scselect | tail -n +2 | egrep '^\ +\*' | cut -d \( -f 2- | sed 's/)$//'`
+SSID=`networksetup -listallhardwareports | awk '/Wi-Fi/{getline; print $2}' | xargs networksetup -getairportnetwork | awk '{print $NF}'`
+
+LOCATION_NAMES=`networksetup -listlocations`
+CURRENT_LOCATION=`networksetup -getcurrentlocation`
 
 ts "Connected to '$SSID'"
 
