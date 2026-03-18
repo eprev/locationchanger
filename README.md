@@ -1,17 +1,45 @@
 # Location Changer
 
-It automatically changes OS X’s [network location](https://support.apple.com/en-us/HT202480)
-based on the name of Wi-Fi network and runs arbitrary scrips when it happens.
+This script automatically changes macOS's [network location](https://support.apple.com/en-us/HT202480)
+based on the name of the active Wi-Fi network (SSID) and runs custom (user-supplied) scripts when 
+the network state changes, say, for changing proxy settings or mounting remote SMB shares.
+
+**Note: the original method is thought to have broken with macOS 15 (Sequoia) due to framework
+privacy settings, resulting in either null script results or `<redacted>`.
+
+The key functionality - the retrieval of the current Wi-Fi SSID triggering the location change and
+any optional scripts - has been reworked and confirmed to work udner macOS 26.3.1 (Tahoe). While
+the script does invoke `sudo` to create/install the script and LaunchAgents, it is rootless from
+there on out.
 
 ## Installation & Update
 
 ```
-curl -L https://github.com/eprev/locationchanger/raw/master/locationchanger.sh | bash
+curl -L https://github.com/pbernicchi/locationchanger/raw/master/locationchanger.sh | bash
 ```
 
-It will ask you for a root password to install `locationchanger` to the */usr/local/bin* directory.
+It will ask you for a root password to install `locationchanger` to the */usr/local/bin*
+directory.
 
-## Basic usage
+**NOTE:**You may wish to install to another directory like */opt/homebrew/bin*. If you do,
+omit the `| bash` from the `curl` command above so the script only downloads. You can edit
+the `INSTALL_DIR` at the top of the script to whatever you want, and also change the LaunchAgent
+path at the bottom of the script (line #6 below):
+
+```
+<dict>
+    <key>Label</key>
+    <string>org.eprev.locationchanger</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/local/bin/locationchanger</string> <!-- ENSURE THIS PATH TO MATCH $INSTALL_DIR -->
+    </array>
+```
+
+Then save and manually run the install script as yourself. (`./locationchanger.sh`)
+
+
+## Basic Usage
 
 You have to name network locations after Wi-Fi networks. Let’s say, you need to have
 a specific network preferences for “Corp Wi-Fi” wireless network, then you have to create
@@ -43,9 +71,13 @@ exec 2>&1
 osascript -e 'tell application "System Events" to set require password to wake of security preferences to false'
 ```
 
+
 ## Aliasing
 
-If you want to share one network location between different wireless networks (for instance, you have a wireless router which broadcasts on 2.4 and 5GHz bands simultaneously), then you can create a configuration file *~/.locations/locations.conf* (plain text file with simple key-value pairs, no spaces in between):
+If you want to share one network location between different wireless networks (for instance, 
+you have a wireless router which broadcasts on 2.4 and 5GHz bands simultaneously), then you can create
+a configuration file *~/.locations/locations.conf* (plain text file with simple key-value pairs, no 
+spaces in between):
 
 ```bash
 Wi-Fi_5GHz=Wi-Fi
@@ -53,9 +85,10 @@ Wi-Fi_5GHz=Wi-Fi
 
 Where the keys are the wireless network names and the values are the desired location names.
 
+
 ## Troubleshooting
 
-It writes quite extensive information to the log file every time the wireless network changes:
+This script writes helpful information to the log file every time the wireless network changes:
 
 ```bash
 tail -f ~/Library/Logs/LocationChanger.log
@@ -69,3 +102,12 @@ Will switch the location to 'Wi-Fi' (configuration file)
 Changing the location to 'Wi-Fi'
 Running '~/.locations/Wi-Fi'
 ```
+
+
+## Credits
+
+This project is a fork of the original project by https://github.com/eprev, found at 
+https://github.com/eprev/locationchanger (2020-2021). No issues or PRs have been acted upon by the author
+in 5 years. Efforts will be made to encourage a merge or transfer of the project to this repo.
+
+This original was unlicensed so I have applied the MIT License to this fork to clarify usage rights for future users.
