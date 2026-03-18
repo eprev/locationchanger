@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# You can change INSTALL_DIR but ensure the LaunchAgent path (currently line 89) is edited to match or this will not run in the background
 INSTALL_DIR=/usr/local/bin
 SCRIPT_NAME=$INSTALL_DIR/locationchanger
 LAUNCH_AGENTS_DIR=$HOME/Library/LaunchAgents
@@ -24,7 +25,7 @@ ts() {
 ID=`whoami`
 ts "I am '$ID'"
 
-SSID=`/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | grep ' SSID' | cut -d : -f 2- | sed 's/^[ ]*//'`
+SSID=`ipconfig getsummary en0 | grep ' SSID' | awk '{print $3}'`
 
 LOCATION_NAMES=`scselect | tail -n +2 | cut -d \( -f 2- | sed 's/)$//'`
 CURRENT_LOCATION=`scselect | tail -n +2 | egrep '^\ +\*' | cut -d \( -f 2- | sed 's/)$//'`
@@ -83,7 +84,7 @@ cat > $PLIST_NAME << EOT
 <plist version="1.0">
 <dict>
     <key>Label</key>
-    <string>org.eprev.locationchanger</string>
+    <string>org.pbernicchi.locationchanger</string>
     <key>ProgramArguments</key>
     <array>
         <string>/usr/local/bin/locationchanger</string>
