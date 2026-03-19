@@ -110,4 +110,4 @@ This project is a fork of the original project by https://github.com/eprev, foun
 https://github.com/eprev/locationchanger (2020-2021). No issues or PRs have been acted upon by the author
 in 5 years. Efforts will be made to encourage a merge or transfer of the project to this repo.
 
-This original was unlicensed so I have applied the MIT License to this fork to clarify usage rights for future users.
+More information on attributon can be found in the [CONTRIB.md](https://github.com/pbernicchi/locationchanger/blob/master/CONTRIB.md) stub.
