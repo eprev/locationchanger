@@ -29,7 +29,7 @@ if [ "$ID" == "root" ]; then
     exit 1;
 fi
 
-SSID=`networksetup -listallhardwareports | awk '/Wi-Fi/{getline; print $2}' | xargs networksetup -getairportnetwork | awk '{print $NF}'`
+SSID=`ipconfig getsummary en0 | grep ' SSID' | awk -F ': ' '{print $2}'`
 
 LOCATION_NAMES=`networksetup -listlocations`
 CURRENT_LOCATION=`networksetup -getcurrentlocation`
