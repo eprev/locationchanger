@@ -21,14 +21,6 @@ ts() {
     date +"[%Y-%m-%d %H:%M] $*"
 }
 
-ID=`whoami`
-ts "I am '$ID'"
-
-if [ "$ID" == "root" ]; then
-    ts "Running as root will read a bad config, exiting."
-    exit 1;
-fi
-
 SSID=`ipconfig getsummary en0 | grep ' SSID' | awk -F ': ' '{print $2}'`
 
 LOCATION_NAMES=`networksetup -listlocations`
