@@ -1,3 +1,5 @@
+> **Archived. Tthe last supported MacOS version was BigSur.**
+
 # Location Changer
 
 It automatically changes OS X’s [network location](https://support.apple.com/en-us/HT202480)
