@@ -1,4 +1,4 @@
-> **Archived. Tthe last supported MacOS version was BigSur.**
+> **Archived. The last supported MacOS version was BigSur.**
 
 # Location Changer
 
